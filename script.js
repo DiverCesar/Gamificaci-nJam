@@ -45,3 +45,20 @@ function showKit() {
     document.getElementById('trophy-popup').classList.remove('show');
     nextScreen('s-kit');
 }
+
+// AÑADE ESTO AL FINAL DE TU SCRIPT.JS
+
+// Efecto Parallax - La mochila persigue al jugador
+document.addEventListener('mousemove', (e) => {
+    if (currentScreen === 's-kit') {
+        const mochila = document.getElementById('mochila-core');
+        if (!mochila) return;
+        
+        // Calcula hacia dónde se mueve el mouse
+        const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+        const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+        
+        // Mantiene el -50% para que siga centrado y le suma el movimiento
+        mochila.style.transform = `translate(calc(-50% + ${-xAxis}px), calc(-50% + ${-yAxis}px))`;
+    }
+});

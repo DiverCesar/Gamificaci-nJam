@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kit de Inicio - Game Jams</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@700&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="grid-bg"></div>
+
+    <div class="app-container">
+        <div class="screen active" id="s-intro">
+            <h1 class="glitch" data-text="GAME JAM: SURVIVAL">GAME JAM: SURVIVAL</h1>
+            <p class="subtitle">Kit de Inicio para Crear Bajo Presión</p>
+            <button class="btn-neon" onclick="nextScreen('s-step1')">INICIAR PARTIDA</button>
+        </div>
+
+        <div class="screen" id="s-step1">
+            <div class="status-bar">VIERNES | 20:00H - TEMA REVELADO</div>
+            <h2 class="prompt">El cronómetro empieza. El lienzo está en blanco.</h2>
+            <div class="choices">
+                <div class="card" onclick="wrongChoice('¡Error fatal! Se quemaron a las 3 AM y el sábado nadie programó.', 's-step1')">
+                    <i class="fa-solid fa-brain"></i>
+                    <h3>A. Lluvia de Ideas Eterna</h3>
+                    <p>Debatir por 6 horas la idea "perfecta".</p>
+                </div>
+                <div class="card" onclick="wrongChoice('¡Mala idea! Perdieron 4 horas peleando por el motor y no hay código.', 's-step1')">
+                    <i class="fa-solid fa-wrench"></i>
+                    <h3>B. Guerra de Motores</h3>
+                    <p>Discutir si usar Unity o Godot en vez de empezar.</p>
+                </div>
+                <div class="card correct" onclick="nextScreen('s-step2')">
+                    <i class="fa-solid fa-bolt"></i>
+                    <h3>C. MVP y a Dormir</h3>
+                    <p>Elegir una mecánica base rápida y descansar.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="screen" id="s-step2">
+            <div class="status-bar warning">SÁBADO | 18:00H - EL CAOS</div>
+            <h2 class="prompt">El código es espagueti. Nada funciona. El equipo entra en pánico.</h2>
+            <div class="choices">
+                <div class="card" onclick="wrongChoice('¡Over-scope! Bonito modelo, pero el jugador se cae del mapa.', 's-step2')">
+                    <i class="fa-solid fa-gem"></i>
+                    <h3>A. Pulir la Basura</h3>
+                    <p>Ignorar bugs y hacer gráficos 3D hermosos.</p>
+                </div>
+                <div class="card correct" onclick="nextScreen('s-step3')">
+                    <i class="fa-solid fa-trash-can"></i>
+                    <h3>B. El Pivote (Borrar todo)</h3>
+                    <p>Cortar funciones rotas y salvar el "Core Loop".</p>
+                </div>
+                <div class="card" onclick="wrongChoice('¡Falacia del costo hundido! Pasaste toda la noche y crasheó igual.', 's-step2')">
+                    <i class="fa-solid fa-bug"></i>
+                    <h3>C. El Héroe Solitario</h3>
+                    <p>Tratar de parchar código roto toda la noche.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="screen" id="s-step3">
+            <div class="status-bar danger">DOMINGO | 16:00H - RECTA FINAL</div>
+            <h2 class="prompt">Falta 1 hora. Tienes un nivel jugable.</h2>
+            <div class="choices">
+                <div class="card correct" onclick="triggerSuccess()">
+                    <i class="fa-solid fa-box-archive"></i>
+                    <h3>A. Empaquetar y Vender</h3>
+                    <p>Subir la build, hacer un GIF y redactar bien la página.</p>
+                </div>
+                <div class="card" onclick="wrongChoice('¡Error de Build! Agregaste algo a las 16:59 y la compilación falló.', 's-step3')">
+                    <i class="fa-solid fa-keyboard"></i>
+                    <h3>B. Pánico de Última Hora</h3>
+                    <p>Programar "una cosita más" hasta el minuto 59.</p>
+                </div>
+                <div class="card" onclick="wrongChoice('¡Nadie lo entiende! El juego funciona pero nadie sabe cómo jugarlo.', 's-step3')">
+                    <i class="fa-solid fa-map"></i>
+                    <h3>C. Crear más niveles</h3>
+                    <p>Hacer 5 niveles gigantes sin poner un tutorial.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="screen" id="s-success">
+            <h2 class="glitch" data-text="¡JUEGO PUBLICADO!" style="color: #0f0;">¡JUEGO PUBLICADO!</h2>
+            <p class="prompt">Sobreviviste a la Jam. Descubriste que lo importante no es ser perfecto, es saber terminar.</p>
+            <button class="btn-neon" style="margin-top: 40px;" onclick="showKit()">VER EL KIT DE SUPERVIVENCIA</button>
+        </div>
+
+        <div class="screen" id="s-kit">
+            <h2 class="prompt" style="margin-bottom: 50px;">EL KIT: LOS ROLES</h2>
+            <div class="kit-universe">
+                <div class="node center"><i class="fa-solid fa-backpack"></i></div>
+                <div class="node primary p1"><i class="fa-solid fa-code"></i><br>Programador</div>
+                <div class="node primary p2"><i class="fa-solid fa-gamepad"></i><br>Game Designer</div>
+                <div class="node primary p3"><i class="fa-solid fa-palette"></i><br>Artista</div>
+                <div class="node primary p4"><i class="fa-solid fa-music"></i><br>Músico</div>
+                <div class="node secondary s1"><i class="fa-solid fa-bullhorn"></i><br>Marketing</div>
+                <div class="node secondary s2"><i class="fa-solid fa-cubes"></i><br>Level Designer</div>
+                <div class="node secondary s3"><i class="fa-solid fa-book-open"></i><br>Storyteller</div>
+                <div class="node secondary s4"><i class="fa-solid fa-volume-high"></i><br>Sound Designer</div>
+            </div>
+        </div>
+
+        <div id="error-overlay">
+            <h2 id="error-msg"></h2>
+            <button class="btn-neon" onclick="closeError()">VOLVER AL CHECKPOINT</button>
+        </div>
+
+        <div id="trophy-popup">
+            <div class="trophy-info">
+                <i class="fa-solid fa-trophy" style="font-size: 30px;"></i>
+                <div>
+                    <strong>LOGRO DESBLOQUEADO</strong><br>
+                    <span>El Primero se lo lleva...</span>
+                </div>
+            </div>
+            <div id="qr-container"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

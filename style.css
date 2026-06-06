@@ -41,12 +41,12 @@ body {
     width: 100%; height: 100%; position: absolute; top: 0; left: 0;
     display: flex; flex-direction: column; justify-content: center; align-items: center;
     opacity: 0; pointer-events: none; transition: opacity 0.4s ease;
-    padding: 50px; text-align: center;
+    padding: 40px; text-align: center;
 }
 .screen.active { opacity: 1; pointer-events: all; }
 
 h1 { font-family: 'JetBrains Mono', monospace; font-size: 80px; margin-bottom: 20px; color: var(--primary); }
-.prompt { font-size: 32px; font-weight: 800; margin-bottom: 50px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
+.prompt { font-size: 32px; font-weight: 800; margin-bottom: 30px; text-shadow: 0 2px 10px rgba(0,0,0,0.5); }
 
 .status-bar {
     position: absolute; top: 40px; left: 60px;
@@ -56,7 +56,7 @@ h1 { font-family: 'JetBrains Mono', monospace; font-size: 80px; margin-bottom: 2
 .status-bar.warning { color: #ffcc00; border-color: #ffcc00; }
 .status-bar.danger { color: var(--secondary); border-color: var(--secondary); }
 
-/* TARJETAS DE DECISIÓN (SÓLO ICONO Y TÍTULO) */
+/* TARJETAS DE DECISIÓN */
 .choices { display: flex; gap: 40px; width: 100%; justify-content: center; align-items: center; }
 
 .card {
@@ -69,17 +69,14 @@ h1 { font-family: 'JetBrains Mono', monospace; font-size: 80px; margin-bottom: 2
 .card h3 { font-family: 'JetBrains Mono', monospace; font-size: 22px; color: var(--text); margin-top: 20px; }
 .card i { font-size: 80px; color: var(--primary); text-shadow: 0 0 20px rgba(0,243,255,0.4); transition: 0.4s; }
 
-/* Efecto Hover Tarjeta: Super dinámico */
 .card:hover {
-    transform: translateY(-20px) scale(1.05);
-    border-color: var(--primary);
-    background: rgba(0, 243, 255, 0.05);
-    box-shadow: 0 15px 35px rgba(0, 243, 255, 0.2), inset 0 0 20px rgba(0, 243, 255, 0.1);
+    transform: translateY(-20px) scale(1.05); border-color: var(--primary);
+    background: rgba(0, 243, 255, 0.05); box-shadow: 0 15px 35px rgba(0, 243, 255, 0.2), inset 0 0 20px rgba(0, 243, 255, 0.1);
 }
 .card:hover i { transform: scale(1.2) rotate(10deg); color: #fff; text-shadow: 0 0 30px var(--primary); }
 .card:active { transform: scale(0.95); }
 
-/* CLASES DE ANIMACIÓN PARA SVGs (Mucha acción visual) */
+/* CLASES ANIMACIÓN SVG */
 .anim-pulse { animation: iconPulse 2s infinite alternate; }
 .anim-shake { animation: iconShake 0.5s infinite; }
 .anim-spin-slow { animation: iconSpin 8s linear infinite; }
@@ -101,53 +98,60 @@ h1 { font-family: 'JetBrains Mono', monospace; font-size: 80px; margin-bottom: 2
 }
 .btn-neon:hover { background: var(--primary); color: #000; box-shadow: 0 0 30px var(--primary); }
 
-/* SISTEMA RADIAL DEL KIT (Corregido, sin solapamientos, asincrónico) */
+/* SISTEMA RADIAL DEL KIT (Corregido y Ordenado) */
 .kit-universe {
-    position: relative; width: 600px; height: 600px; margin: 0 auto;
-    border-radius: 50%; /* border: 1px dashed rgba(255,255,255,0.1); Opcional para guiar */
+    position: relative; width: 600px; height: 500px; margin: 0 auto;
 }
 
 .node {
-    position: absolute; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    position: absolute; width: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center;
     transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: crosshair;
+    transform: translate(-50%, -50%); /* Centrado matemático sobre la coordenada */
 }
 
 .node span { margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 16px; transition: 0.3s; }
 .node i { transition: 0.4s; }
 
-/* Hover en Roles: Rotación y resplandor intenso */
-.node:hover { transform: scale(1.4) !important; z-index: 10; }
-.node.primary:hover i { color: #fff; text-shadow: 0 0 40px var(--primary); transform: rotate(15deg); }
-.node.secondary:hover i { color: #fff; text-shadow: 0 0 40px var(--secondary); transform: rotate(-15deg); }
-.node:hover span { opacity: 1; text-shadow: 0 0 10px #fff; }
+/* Hovers (Mantiene el centrado al escalar) */
+.node:hover { transform: translate(-50%, -50%) scale(1.3) !important; z-index: 10; }
+.node.primary:hover i { color: #fff; text-shadow: 0 0 40px var(--primary); transform: rotate(10deg); }
+.node.secondary:hover i { color: #fff; text-shadow: 0 0 40px var(--secondary); transform: rotate(-10deg); }
+.node:hover span { text-shadow: 0 0 10px #fff; }
 
-/* Centro - La Mochila */
+/* Centro - Mochila (Animación Latido tipo música) */
 .center-node {
-    top: 50%; left: 50%; transform: translate(-50%, -50%);
-    width: 120px; height: 120px; background: rgba(0, 243, 255, 0.1); border: 2px solid var(--primary);
-    border-radius: 50%; box-shadow: 0 0 50px rgba(0,243,255,0.3); z-index: 5;
-    animation: centerPulse 4s infinite alternate;
+    top: 50%; left: 50%; width: 120px; height: 120px;
+    background: rgba(0, 243, 255, 0.05); border: 2px dashed var(--primary);
+    border-radius: 50%; z-index: 5;
+    /* El transform parallax se inyecta desde JS */
 }
-.center-node i { font-size: 50px; color: #fff; }
+.heartbeat-icon {
+    font-size: 55px; color: #fff; filter: drop-shadow(0 0 10px rgba(0,243,255,0.8));
+    animation: technoBeat 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+}
 
-/* Roles Principales (Cruz) */
+@keyframes technoBeat {
+    0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(0,243,255,0.5)); }
+    15% { transform: scale(1.3); filter: drop-shadow(0 0 30px rgba(0,243,255,1)); }
+    30% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(0,243,255,0.5)); }
+    45% { transform: scale(1.3); filter: drop-shadow(0 0 30px rgba(0,243,255,1)); }
+    100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(0,243,255,0.5)); }
+}
+
+/* POSICIONES EXACTAS (Distribución perfecta) */
 .primary { color: var(--primary); }
-.primary i { font-size: 60px; }
-.pos-top { top: 0%; left: 50%; margin-left: -50px; animation: floatNode 3s ease-in-out infinite alternate; }
-.pos-bottom { bottom: 0%; left: 50%; margin-left: -50px; animation: floatNode 4s ease-in-out infinite alternate-reverse; }
-.pos-left { top: 50%; left: 0%; margin-top: -50px; animation: floatNode 3.5s ease-in-out infinite alternate; }
-.pos-right { top: 50%; right: 0%; margin-top: -50px; animation: floatNode 4.5s ease-in-out infinite alternate-reverse; }
+.primary i { font-size: 50px; }
+.pos-top { top: 0%; left: 50%; }
+.pos-bottom { top: 100%; left: 50%; }
+.pos-left { top: 50%; left: 0%; }
+.pos-right { top: 50%; left: 100%; }
 
-/* Roles Secundarios (Diagonales) */
-.secondary { color: var(--secondary); opacity: 0.7; }
-.secondary i { font-size: 40px; }
-.pos-top-left { top: 15%; left: 15%; animation: floatNode 3.2s ease-in-out infinite alternate; }
-.pos-top-right { top: 15%; right: 15%; animation: floatNode 3.8s ease-in-out infinite alternate-reverse; }
-.pos-bottom-left { bottom: 15%; left: 15%; animation: floatNode 4.2s ease-in-out infinite alternate; }
-.pos-bottom-right { bottom: 15%; right: 15%; animation: floatNode 3.6s ease-in-out infinite alternate-reverse; }
-
-@keyframes floatNode { 0% { transform: translateY(0px) rotate(0deg); } 100% { transform: translateY(-20px) rotate(5deg); } }
-@keyframes centerPulse { 0% { box-shadow: 0 0 30px rgba(0,243,255,0.2); } 100% { box-shadow: 0 0 80px rgba(0,243,255,0.6); } }
+.secondary { color: var(--secondary); opacity: 0.8; }
+.secondary i { font-size: 35px; }
+.pos-top-left { top: 18%; left: 18%; }
+.pos-top-right { top: 18%; left: 82%; }
+.pos-bottom-left { top: 82%; left: 18%; }
+.pos-bottom-right { top: 82%; left: 82%; }
 
 /* OVERLAY DE ERROR */
 #error-overlay {

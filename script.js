@@ -1,8 +1,8 @@
 // ==========================================
-// CONFIGURACIÓN: ¡AQUÍ PON LA URL DE TU QR!
+// CONFIGURACIÓN: QR GENERADO AUTOMÁTICAMENTE
 // ==========================================
-// Sube tu imagen de QR a ImgBB o Postimages y pega el link directo (.png/.jpg) aquí.
-const URL_IMAGEN_QR = "https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg";
+// Esto convierte tu link de Vercel directamente en un QR funcional
+const URL_IMAGEN_QR = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://dashboard-eight-rho-65.vercel.app/";
 
 let currentScreen = 's-intro';
 
@@ -13,7 +13,6 @@ function nextScreen(targetId) {
 }
 
 function wrongChoice(message, returnScreenId) {
-    // Inyecta el mensaje de error personalizado para su explicación en vivo
     document.getElementById('error-msg').innerText = message;
     document.getElementById('error-overlay').classList.add('show');
 }
@@ -25,7 +24,7 @@ function closeError() {
 function triggerSuccess() {
     nextScreen('s-success');
     
-    // Inyectar el QR dinámicamente para prevenir trampas en el inspector HTML
+    // Inyectar el QR dinámicamente
     const container = document.getElementById('qr-container');
     if (container.innerHTML === "") {
         const img = document.createElement('img');
@@ -34,31 +33,19 @@ function triggerSuccess() {
         container.appendChild(img);
     }
 
-    // Retraso épico para mostrar el trofeo
+    // Animación de aparición
     setTimeout(() => {
-        document.getElementById('trophy-popup').classList.add('show');
+        const popup = document.getElementById('trophy-popup');
+        popup.style.display = 'flex'; // Asegura que exista
+        popup.classList.add('show');
     }, 1500);
 }
 
 function showKit() {
-    // Esconder trofeo para no tapar elementos y pasar a la pantalla final
-    document.getElementById('trophy-popup').classList.remove('show');
+    // ELIMINACIÓN FORZADA DEL TROFEO PARA QUE NO ESTORBE AL SOUND DESIGNER
+    const popup = document.getElementById('trophy-popup');
+    popup.classList.remove('show');
+    popup.style.display = 'none'; // Lo borra de la pantalla instantáneamente
+    
     nextScreen('s-kit');
 }
-
-// AÑADE ESTO AL FINAL DE TU SCRIPT.JS
-
-// Efecto Parallax - La mochila persigue al jugador
-document.addEventListener('mousemove', (e) => {
-    if (currentScreen === 's-kit') {
-        const mochila = document.getElementById('mochila-core');
-        if (!mochila) return;
-        
-        // Calcula hacia dónde se mueve el mouse
-        const xAxis = (window.innerWidth / 2 - e.pageX) / 25;
-        const yAxis = (window.innerHeight / 2 - e.pageY) / 25;
-        
-        // Mantiene el -50% para que siga centrado y le suma el movimiento
-        mochila.style.transform = `translate(calc(-50% + ${-xAxis}px), calc(-50% + ${-yAxis}px))`;
-    }
-});

@@ -1,5 +1,5 @@
 // ==========================================
-// CONFIGURACIÓN: QR GENERADO AUTOMÁTICAMENTE
+// CONFIGURACIÓN: QR
 // ==========================================
 const URL_IMAGEN_QR = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://dashboard-eight-rho-65.vercel.app/";
 
@@ -23,7 +23,6 @@ function closeError() {
 function triggerSuccess() {
     nextScreen('s-success');
     
-    // Inyectar QR
     const container = document.getElementById('qr-container');
     if (container.innerHTML === "") {
         const img = document.createElement('img');
@@ -32,7 +31,6 @@ function triggerSuccess() {
         container.appendChild(img);
     }
 
-    // Mostrar Trofeo
     setTimeout(() => {
         const popup = document.getElementById('trophy-popup');
         if(popup) popup.classList.add('show');
@@ -40,56 +38,41 @@ function triggerSuccess() {
 }
 
 function showKit() {
-    // DESTRUCCIÓN DEL TROFEO: Lo eliminamos del HTML por completo para que no estorbe.
+    // DESTRUCCIÓN DEL TROFEO PARA SIEMPRE
     const popup = document.getElementById('trophy-popup');
-    if(popup) {
-        popup.remove();
-    }
+    if(popup) popup.remove();
     
-    // Generar el carrusel de tarjetas la primera vez que entramos
     generateCarousel();
-    
     nextScreen('s-kit');
 }
 
 // ==========================================
-// LÓGICA DEL CARRUSEL 3D HORIZONTAL DE TARJETAS
+// LÓGICA DE COVER FLOW (EL CARRUSEL DEFINITIVO)
 // ==========================================
-
-// Configuración de los roles con colores individuales ultra representativos
 const rolesData = [
-    { name: "Programador", icon: "fa-code", color: "#00f3ff" },       // Celeste
-    { name: "Game Designer", icon: "fa-gamepad", color: "#ffb703" },   // Naranja / Amarillo
-    { name: "Artista", icon: "fa-palette", color: "#ff00ff" },         // Magenta
-    { name: "Músico", icon: "fa-music", color: "#00ff00" },            // Verde Lima
-    { name: "Marketing", icon: "fa-bullhorn", color: "#ffd700" },      // Oro
-    { name: "Level Designer", icon: "fa-cubes", color: "#9d4edd" },    // Morado
-    { name: "Storyteller", icon: "fa-book-open", color: "#ef233c" },   // Rojo Carmesí
-    { name: "Sound Designer", icon: "fa-volume-high", color: "#4361ee" } // Azul Profundo
+    { name: "Programador", icon: "fa-code", color: "#00f3ff" },
+    { name: "Game Designer", icon: "fa-gamepad", color: "#ffb703" },
+    { name: "Artista", icon: "fa-palette", color: "#ff00ff" },
+    { name: "Músico", icon: "fa-music", color: "#00ff00" },
+    { name: "Marketing", icon: "fa-bullhorn", color: "#ffd700" },
+    { name: "Level Designer", icon: "fa-cubes", color: "#9d4edd" },
+    { name: "Storyteller", icon: "fa-book-open", color: "#ef233c" },
+    { name: "Sound Designer", icon: "fa-volume-high", color: "#4361ee" }
 ];
 
 let carouselGenerated = false;
-let currentRotation = 0;
+let currentIndex = 0;
 
 function generateCarousel() {
-    if(carouselGenerated) return; // Evitar generarlo dos veces
+    if(carouselGenerated) return;
     
     const track = document.getElementById('track');
-    const radius = 380; // La distancia de las tarjetas al centro de rotación
-    const angleStep = 360 / rolesData.length;
 
-    rolesData.forEach((role, index) => {
-        const angle = index * angleStep;
-        
-        // Crear la tarjeta
+    rolesData.forEach((role) => {
         const card = document.createElement('div');
         card.className = 'role-card';
-        // Inyectar el color individual como variable CSS para que el CSS la use
         card.style.setProperty('--role-color', role.color);
-        // Posicionar en el círculo 3D horizontal
-        card.style.transform = `rotateY(${angle}deg) translateZ(${radius}px)`;
         
-        // Contenido (Ícono + Nombre)
         card.innerHTML = `
             <i class="fa-solid ${role.icon}"></i>
             <span>${role.name}</span>
@@ -99,15 +82,72 @@ function generateCarousel() {
     });
 
     carouselGenerated = true;
+    updateCarousel(); // Acomoda las cartas en su posición inicial
 }
 
 function rotateCarousel(direction) {
-    // direction: -1 para Izquierda, 1 para Derecha
-    const angleStep = 360 / rolesData.length;
-    currentRotation += direction * -angleStep; 
-    
-    const track = document.getElementById('track');
-    if(track) {
-        track.style.transform = `rotateY(${currentRotation}deg)`;
-    }
+    // direction: -1 Izquierda, 1 Derecha
+    // Avanza el índice y hace el loop si llega al final o al inicio
+    currentIndex = (currentIndex + direction + rolesData.length) % rolesData.length;
+    updateCarousel();
+}
+
+function updateCarousel() {
+    const cards = document.querySelectorAll('.role-card');
+    const total = rolesData.length;
+
+    cards.forEach((card, index) => {
+        // Calcula la distancia de esta carta al centro
+        let offset = index - currentIndex;
+
+        // Lógica de "camino más corto" para que las cartas den la vuelta sin saltos raros
+        if (offset > total / 2) offset -= total;
+        if (offset < -total / 2) offset += total;
+
+        // APLICAMOS LA MAGIA DEL COVER FLOW
+        if (offset === 0) {
+            // CARTA CENTRAL (ACTIVA)
+            card.style.transform = `translateX(0) translateZ(50px) rotateY(0deg) scale(1.1)`;
+            card.style.zIndex = 10;
+            card.style.opacity = 1;
+            // Efecto Neón
+            card.style.boxShadow = `0 0 40px var(--role-color), inset 0 0 15px var(--role-color)`;
+            card.querySelector('i').style.color = '#fff';
+            card.querySelector('i').style.filter = `drop-shadow(0 0 15px #fff)`;
+            card.querySelector('span').style.color = '#fff';
+            card.querySelector('span').style.textShadow = `0 0 10px #fff`;
+
+        } else if (offset === 1) {
+            // CARTA DERECHA (1 PASO)
+            card.style.transform = `translateX(180px) translateZ(-100px) rotateY(-30deg) scale(0.9)`;
+            card.style.zIndex = 5;
+            card.style.opacity = 0.6;
+            // Apaga neón
+            card.style.boxShadow = `none`;
+            card.querySelector('i').style.color = `var(--role-color)`;
+            card.querySelector('i').style.filter = `none`;
+            card.querySelector('span').style.color = `rgba(255,255,255,0.6)`;
+            card.querySelector('span').style.textShadow = `none`;
+
+        } else if (offset === -1) {
+            // CARTA IZQUIERDA (1 PASO)
+            card.style.transform = `translateX(-180px) translateZ(-100px) rotateY(30deg) scale(0.9)`;
+            card.style.zIndex = 5;
+            card.style.opacity = 0.6;
+            // Apaga neón
+            card.style.boxShadow = `none`;
+            card.querySelector('i').style.color = `var(--role-color)`;
+            card.querySelector('i').style.filter = `none`;
+            card.querySelector('span').style.color = `rgba(255,255,255,0.6)`;
+            card.querySelector('span').style.textShadow = `none`;
+
+        } else {
+            // CARTAS ESCONDIDAS ATRÁS
+            // Se van a los extremos y se hacen pequeñas para esconderse
+            card.style.transform = `translateX(${Math.sign(offset) * 300}px) translateZ(-300px) scale(0.5)`;
+            card.style.zIndex = 1;
+            card.style.opacity = 0; // Invisibles
+            card.style.boxShadow = `none`;
+        }
+    });
 }

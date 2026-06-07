@@ -33,7 +33,7 @@ function triggerSuccess() {
         container.appendChild(img);
     }
 
-    // Animación de aparición
+    // Animación de aparición del trofeo
     setTimeout(() => {
         const popup = document.getElementById('trophy-popup');
         popup.style.display = 'flex'; // Asegura que exista
@@ -42,10 +42,32 @@ function triggerSuccess() {
 }
 
 function showKit() {
-    // ELIMINACIÓN FORZADA DEL TROFEO PARA QUE NO ESTORBE AL SOUND DESIGNER
+    // ELIMINACIÓN FORZADA DEL TROFEO PARA QUE NO ESTORBE EN EL MUNDO GALAXY
     const popup = document.getElementById('trophy-popup');
     popup.classList.remove('show');
     popup.style.display = 'none'; // Lo borra de la pantalla instantáneamente
     
     nextScreen('s-kit');
 }
+
+// ==========================================
+// MOUSE TRACKER (EFECTO PARALLAX MARIO GALAXY)
+// ==========================================
+document.addEventListener('mousemove', (e) => {
+    // Solo activamos el seguimiento si estamos en la pantalla del Kit
+    if (currentScreen === 's-kit') {
+        const mochila = document.getElementById('mochila-core');
+        if (!mochila) return;
+
+        // Obtenemos el centro de la pantalla actual
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+        
+        // Calcula hacia dónde se mueve el mouse (el factor /25 hace que el movimiento sea sutil pero notable)
+        const xAxis = (centerX - e.pageX) / 25;
+        const yAxis = (centerY - e.pageY) / 25;
+        
+        // Aplica el movimiento sobre la base de estar centrado (-50%)
+        mochila.style.transform = `translate(calc(-50% + ${-xAxis}px), calc(-50% + ${-yAxis}px))`;
+    }
+});

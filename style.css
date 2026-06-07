@@ -98,61 +98,6 @@ h1 { font-family: 'JetBrains Mono', monospace; font-size: 80px; margin-bottom: 2
 }
 .btn-neon:hover { background: var(--primary); color: #000; box-shadow: 0 0 30px var(--primary); }
 
-/* SISTEMA RADIAL DEL KIT (Corregido y Ordenado) */
-.kit-universe {
-    position: relative; width: 600px; height: 500px; margin: 0 auto;
-}
-
-.node {
-    position: absolute; width: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center;
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: crosshair;
-    transform: translate(-50%, -50%); /* Centrado matemático sobre la coordenada */
-}
-
-.node span { margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 16px; transition: 0.3s; }
-.node i { transition: 0.4s; }
-
-/* Hovers (Mantiene el centrado al escalar) */
-.node:hover { transform: translate(-50%, -50%) scale(1.3) !important; z-index: 10; }
-.node.primary:hover i { color: #fff; text-shadow: 0 0 40px var(--primary); transform: rotate(10deg); }
-.node.secondary:hover i { color: #fff; text-shadow: 0 0 40px var(--secondary); transform: rotate(-10deg); }
-.node:hover span { text-shadow: 0 0 10px #fff; }
-
-/* Centro - Mochila (Animación Latido tipo música) */
-.center-node {
-    top: 50%; left: 50%; width: 120px; height: 120px;
-    background: rgba(0, 243, 255, 0.05); border: 2px dashed var(--primary);
-    border-radius: 50%; z-index: 5;
-    /* El transform parallax se inyecta desde JS */
-}
-.heartbeat-icon {
-    font-size: 55px; color: #fff; filter: drop-shadow(0 0 10px rgba(0,243,255,0.8));
-    animation: technoBeat 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
-}
-
-@keyframes technoBeat {
-    0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(0,243,255,0.5)); }
-    15% { transform: scale(1.3); filter: drop-shadow(0 0 30px rgba(0,243,255,1)); }
-    30% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(0,243,255,0.5)); }
-    45% { transform: scale(1.3); filter: drop-shadow(0 0 30px rgba(0,243,255,1)); }
-    100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(0,243,255,0.5)); }
-}
-
-/* POSICIONES EXACTAS (Distribución perfecta) */
-.primary { color: var(--primary); }
-.primary i { font-size: 50px; }
-.pos-top { top: 0%; left: 50%; }
-.pos-bottom { top: 100%; left: 50%; }
-.pos-left { top: 50%; left: 0%; }
-.pos-right { top: 50%; left: 100%; }
-
-.secondary { color: var(--secondary); opacity: 0.8; }
-.secondary i { font-size: 35px; }
-.pos-top-left { top: 18%; left: 18%; }
-.pos-top-right { top: 18%; left: 82%; }
-.pos-bottom-left { top: 82%; left: 18%; }
-.pos-bottom-right { top: 82%; left: 82%; }
-
 /* OVERLAY DE ERROR */
 #error-overlay {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -182,3 +127,69 @@ h1 { font-family: 'JetBrains Mono', monospace; font-size: 80px; margin-bottom: 2
 .glitch::before { left: 3px; text-shadow: -3px 0 var(--secondary); animation: glitch-anim 2s infinite linear alternate-reverse; }
 .glitch::after { left: -3px; text-shadow: -3px 0 var(--primary); animation: glitch-anim 3s infinite linear alternate-reverse; }
 @keyframes glitch-anim { 0% { clip-path: inset(20% 0 80% 0); } 20% { clip-path: inset(60% 0 10% 0); } 100% { clip-path: inset(40% 0 50% 0); } }
+
+
+/* =========================================================
+   NUEVO SISTEMA RADIAL (MARIO GALAXY STYLE)
+   ========================================================= */
+.kit-universe {
+    position: relative; width: 600px; height: 500px; margin: 0 auto;
+}
+
+/* La Mochila en el centro con latido tecno */
+.center-node {
+    position: absolute; top: 50%; left: 50%; width: 120px; height: 120px;
+    background: rgba(0, 243, 255, 0.05); border: 2px dashed var(--primary);
+    border-radius: 50%; z-index: 5;
+    /* El transform parallax lo pone el JS, inicializamos centrado: */
+    transform: translate(-50%, -50%);
+    display: flex; justify-content: center; align-items: center;
+}
+.heartbeat-icon {
+    font-size: 55px; color: #fff; filter: drop-shadow(0 0 10px rgba(0,243,255,0.8));
+    animation: technoBeat 1.2s infinite cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+@keyframes technoBeat {
+    0% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(0,243,255,0.5)); }
+    15% { transform: scale(1.3); filter: drop-shadow(0 0 30px rgba(0,243,255,1)); }
+    30% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(0,243,255,0.5)); }
+    45% { transform: scale(1.3); filter: drop-shadow(0 0 30px rgba(0,243,255,1)); }
+    100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(0,243,255,0.5)); }
+}
+
+/* Planetas flotantes alrededor */
+.node {
+    position: absolute; width: 140px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); cursor: crosshair;
+}
+
+.node span { margin-top: 10px; font-family: 'JetBrains Mono', monospace; font-size: 16px; transition: 0.3s; }
+.node i { transition: 0.4s; }
+
+/* HOVERS GALAXY (Agrandamiento masivo y brillo extremo) */
+.node:hover { transform: scale(1.5) !important; z-index: 10; }
+.node.primary:hover i { color: #fff; text-shadow: 0 0 40px var(--primary); transform: rotate(15deg); }
+.node.secondary:hover i { color: #fff; text-shadow: 0 0 40px var(--secondary); transform: rotate(-15deg); }
+.node:hover span { text-shadow: 0 0 10px #fff; }
+
+.primary { color: var(--primary); }
+.primary i { font-size: 50px; }
+.secondary { color: var(--secondary); opacity: 0.8; }
+.secondary i { font-size: 35px; }
+
+/* Posicionamiento y Animación Constante (Flotan sutilmente como mundos) */
+.pos-top { top: 0%; left: 50%; margin-left: -70px; margin-top: -70px; animation: galaxyFloat 3s ease-in-out infinite alternate; }
+.pos-bottom { top: 100%; left: 50%; margin-left: -70px; margin-top: -70px; animation: galaxyFloat 4s ease-in-out infinite alternate-reverse; }
+.pos-left { top: 50%; left: 0%; margin-left: -70px; margin-top: -70px; animation: galaxyFloat 3.5s ease-in-out infinite alternate; }
+.pos-right { top: 50%; left: 100%; margin-left: -70px; margin-top: -70px; animation: galaxyFloat 4.5s ease-in-out infinite alternate-reverse; }
+
+.pos-top-left { top: 18%; left: 18%; margin-left: -70px; margin-top: -70px; animation: galaxyFloat 3.2s ease-in-out infinite alternate; }
+.pos-top-right { top: 18%; left: 82%; margin-left: -70px; margin-top: -70px; animation: galaxyFloat 3.8s ease-in-out infinite alternate-reverse; }
+.pos-bottom-left { top: 82%; left: 18%; margin-left: -70px; margin-top: -70px; animation: galaxyFloat 4.2s ease-in-out infinite alternate; }
+.pos-bottom-right { top: 82%; left: 82%; margin-left: -70px; margin-top: -70px; animation: galaxyFloat 3.6s ease-in-out infinite alternate-reverse; }
+
+@keyframes galaxyFloat {
+    0% { transform: translateY(0px) rotate(0deg); }
+    100% { transform: translateY(-15px) rotate(3deg); }
+}

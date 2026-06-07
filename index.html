@@ -152,26 +152,33 @@
         </div>
 
         <div class="screen" id="s-success">
-            <h2 class="glitch" data-text="¡SOBREVIVISTE!" style="color: #0f0;">¡SOBREVIVISTE!</h2>
+            <h2 class="glitch" data-text="¡SOBREVIVISTE!" style="color: #00ffcc;">¡SOBREVIVISTE!</h2>
             <button class="btn-neon" style="margin-top: 40px;" onclick="showKit()">VER EL KIT (ROLES)</button>
         </div>
 
         <div class="screen" id="s-kit">
-            <h2 class="prompt" style="margin-bottom: 30px; z-index: 20; position: relative;">EL KIT: ECOSISTEMA JAM</h2>
-            <div class="kit-universe">
-                <div class="node center-node" id="mochila-core" title="La Mochila (El Core)">
+            <h2 class="prompt" style="position: absolute; top: 40px; color: #fff;">EL KIT: ECOSISTEMA JAM</h2>
+            
+            <div class="carousel-container">
+                <div class="center-mochila" id="mochila-core">
                     <i class="fa-solid fa-backpack heartbeat-icon"></i>
                 </div>
-                
-                <div class="node primary pos-top"><i class="fa-solid fa-code"></i><span>Programador</span></div>
-                <div class="node primary pos-bottom"><i class="fa-solid fa-gamepad"></i><span>Game Designer</span></div>
-                <div class="node primary pos-left"><i class="fa-solid fa-palette"></i><span>Artista</span></div>
-                <div class="node primary pos-right"><i class="fa-solid fa-music"></i><span>Músico</span></div>
-                
-                <div class="node secondary pos-top-right"><i class="fa-solid fa-bullhorn"></i><span>Marketing</span></div>
-                <div class="node secondary pos-bottom-left"><i class="fa-solid fa-cubes"></i><span>Level Designer</span></div>
-                <div class="node secondary pos-top-left"><i class="fa-solid fa-book-open"></i><span>Storyteller</span></div>
-                <div class="node secondary pos-bottom-right"><i class="fa-solid fa-volume-high"></i><span>Sound Designer</span></div>
+
+                <div class="carousel-3d" id="carousel-3d">
+                    <div class="c-item item-1"><i class="fa-solid fa-code"></i><span>Programador</span></div>
+                    <div class="c-item item-2"><i class="fa-solid fa-gamepad"></i><span>Game Designer</span></div>
+                    <div class="c-item item-3"><i class="fa-solid fa-palette"></i><span>Artista</span></div>
+                    <div class="c-item item-4"><i class="fa-solid fa-music"></i><span>Músico</span></div>
+                    <div class="c-item item-5"><i class="fa-solid fa-bullhorn"></i><span>Marketing</span></div>
+                    <div class="c-item item-6"><i class="fa-solid fa-cubes"></i><span>Level Designer</span></div>
+                    <div class="c-item item-7"><i class="fa-solid fa-book-open"></i><span>Storyteller</span></div>
+                    <div class="c-item item-8"><i class="fa-solid fa-volume-high"></i><span>Sound Designer</span></div>
+                </div>
+            </div>
+
+            <div class="carousel-controls">
+                <button onclick="rotateCarousel(-1)" class="nav-btn-3d"><i class="fa-solid fa-chevron-left"></i> ANTERIOR</button>
+                <button onclick="rotateCarousel(1)" class="nav-btn-3d">SIGUIENTE <i class="fa-solid fa-chevron-right"></i></button>
             </div>
         </div>
 
